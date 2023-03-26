@@ -63,8 +63,9 @@ const PlaceItem = (props) => {
         footerClass="place-item__modal-actions"
         footer={<Button onClick={closeMapHandler}>CLOSE</Button>}
       >
-        <div className="map-container">
-          <Map center={props.coordinates} zoom={16} />
+        <div className="map-container cntr">
+          <p>Will be availible soon!</p>
+          {/* <Map center={props.coordinates} zoom={16} /> */}
         </div>
       </Modal>
       <Modal
@@ -92,7 +93,7 @@ const PlaceItem = (props) => {
         <Card className="place-item__content">
           <div className="place-item__image">
             <img
-              src={process.env.REACT_APP_ASSET_URL +  `/${props.image}`}
+              src={props.image}
               alt={props.title}
             />
           </div>
