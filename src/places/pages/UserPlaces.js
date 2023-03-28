@@ -6,10 +6,10 @@ import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 
 const UserPlaces = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
-  console.log(error, clearError)
-  const [requestSent, setRequestSent] = useState(false)
+  console.log(error, clearError);
+  const [requestSent, setRequestSent] = useState(false);
   const [loadedPlaces, setLoadedPlaces] = useState([]);
-  const [reloadPage, setReloadPage] = useState (0)
+  const [reloadPage, setReloadPage] = useState(0);
   const userId = useParams().userId;
 
   useEffect(() => {
@@ -19,24 +19,32 @@ const UserPlaces = () => {
           process.env.REACT_APP_BACKEND_URL + `/places/user/${userId}`
         );
         setLoadedPlaces(data.places);
-      } catch (err) {}
+      } catch (err) {
+        setLoadedPlaces([]);
+      }
     };
+
     getPlaces();
-    setRequestSent(true)
+    setRequestSent(true);
   }, [sendRequest, userId, reloadPage]);
 
-  const reloadPlacesHandler= () =>{
-    setReloadPage(prev => prev+1)
-  }
+  const reloadPlacesHandler = () => {
+    setReloadPage((prev) => prev + 5);
+  };
 
-  return  <>
-    {isLoading && (
-      <div className="center">
-        <LoadingSpinner asOverlay />
-      </div>
-    )}
-    {!isLoading && loadedPlaces && requestSent && <PlaceList items={loadedPlaces} reloadPlaces={reloadPlacesHandler} />};
-  </>;
+  return (
+    <>
+      {isLoading && (
+        <div className="center">
+          <LoadingSpinner asOverlay />
+        </div>
+      )}
+      {!isLoading && loadedPlaces && requestSent && (
+        <PlaceList items={loadedPlaces} reloadPlaces={reloadPlacesHandler} />
+      )}
+      ;
+    </>
+  );
 };
 
 export default UserPlaces;

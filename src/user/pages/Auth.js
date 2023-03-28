@@ -84,9 +84,7 @@ const Auth = () => {
             "Content-Type": "application/json",
           }
         );
-        //ovdje ulogujemo korisnika ako sendRequest ne baci gresku (ako je sve ok)
-      
-        console.log('userId:', response.userId,'token', response.token)
+
         auth.login(response.userId, response.token);
       } catch (err) {}
     } else {
@@ -102,8 +100,7 @@ const Auth = () => {
           "POST",
           formData //aint need no headers when using formData, a ipak mozemo u backendu pisat req.body.email npr i radit ce
         );
-       /*  console.log('userId:', response.userId,'token', response.token) */
-        console.log(response)
+
         auth.login(response.userId, response.token);
         
       } catch (err) {}

@@ -1,6 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
 
-
 let logoutTimer;
 
 export const useAuth = () => {
@@ -37,13 +36,6 @@ export const useAuth = () => {
       const remainingTime =
         tokenExpirationDate.getTime() - new Date().getTime();
 
-      /*       console.log(
-        "TOKEN exp time:",
-        tokenExpirationDate,
-        "remaining time:",
-        remainingTime
-      ); */
-
       logoutTimer = setTimeout(logout, remainingTime);
     } else {
       clearTimeout(logoutTimer);
@@ -65,6 +57,5 @@ export const useAuth = () => {
     }
   }, [login]);
 
-
-  return {token, login, logout, userId}
+  return { token, login, logout, userId };
 };

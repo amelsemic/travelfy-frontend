@@ -9,27 +9,24 @@ import "./PlaceItem.css";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
-import getCoordsForAdress from "../location";  
+import getCoordsForAdress from "../location";
 import MapContainer from "./mapConteiner";
-
 
 const PlaceItem = (props) => {
   const auth = useContext(AuthContext);
   const [showMap, setShowMap] = useState(false);
-  const [coords, setCoords] = useState(null);
+  const [coords, setCoords] = useState({ lat: 0, lng: 0 });
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
-  
 
   const openMapHandler = async () => {
     setShowMap(true);
-    
     let newCoords = await getCoordsForAdress(props.title);
     setCoords(newCoords);
-  }
+  };
 
   const closeMapHandler = () => {
-    setCoords(null)
+    setCoords({ lat: 0, lng: 0 });
     setShowMap(false);
   };
 
@@ -44,7 +41,7 @@ const PlaceItem = (props) => {
   const confirmDeleteHandler = async () => {
     try {
       setShowConfirmModal(false);
-       await sendRequest(
+      await sendRequest(
         process.env.REACT_APP_BACKEND_URL + `/places/${props.id}`,
         "DELETE",
         null,
@@ -52,8 +49,10 @@ const PlaceItem = (props) => {
           Authorization: "Bearer " + auth.token,
         }
       );
-      props.reloadPlaces();
-    } catch (err) {}
+    } catch (err) {
+      console.log(err)
+    }
+    props.reloadPlaces();
   };
 
   if (isLoading) {
@@ -75,9 +74,11 @@ const PlaceItem = (props) => {
         footerClass="place-item__modal-actions"
         footer={<Button onClick={closeMapHandler}>CLOSE</Button>}
       >
-        <div className="map-container">
-          {!coords && <p>Map not availible</p>}
-          {coords && <MapContainer lat={coords.lat} lng={coords.lng} />}
+        <div className="map-container cntr">
+          {coords.lat === 0 && <p>Map not availible</p>}
+          {coords.lat !== 0 && (
+            <MapContainer lat={coords.lat} lng={coords.lng} />
+          )}
         </div>
       </Modal>
       <Modal
@@ -104,10 +105,7 @@ const PlaceItem = (props) => {
       <li className="place-item">
         <Card className="place-item__content">
           <div className="place-item__image">
-            <img
-              src={props.image}
-              alt={props.title}
-            />
+            <img src={props.image} alt={props.title} />
           </div>
           <div className="place-item__info">
             <h2>{props.title}</h2>
