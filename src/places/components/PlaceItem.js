@@ -9,17 +9,29 @@ import "./PlaceItem.css";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
+import getCoordsForAdress from "../location";  
+import MapContainer from "./mapConteiner";
+
 
 const PlaceItem = (props) => {
   const auth = useContext(AuthContext);
-  /*   const [pomError, setPomError] = useState(true) */
   const [showMap, setShowMap] = useState(false);
+  const [coords, setCoords] = useState(null);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  
 
-  const openMapHandler = () => setShowMap(true);
+  const openMapHandler = async () => {
+    setShowMap(true);
+    
+    let newCoords = await getCoordsForAdress(props.title);
+    setCoords(newCoords);
+  }
 
-  const closeMapHandler = () => setShowMap(false);
+  const closeMapHandler = () => {
+    setCoords(null)
+    setShowMap(false);
+  };
 
   const showDeleteWarningHandler = () => {
     setShowConfirmModal(true);
@@ -63,9 +75,9 @@ const PlaceItem = (props) => {
         footerClass="place-item__modal-actions"
         footer={<Button onClick={closeMapHandler}>CLOSE</Button>}
       >
-        <div className="map-container cntr">
-          <p>Will be availible soon!</p>
-          {/* <Map center={props.coordinates} zoom={16} /> */}
+        <div className="map-container">
+          {!coords && <p>Map not availible</p>}
+          {coords && <MapContainer lat={coords.lat} lng={coords.lng} />}
         </div>
       </Modal>
       <Modal
