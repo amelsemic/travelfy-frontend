@@ -12,7 +12,9 @@
   text-decoration: none;
   padding: 1rem;
   color: white;
-  background: #292929;
+  background: #387680bc;
+  border-style: groove;
+  border-color: #ffd900;
 }
 
 .user-item a:hover,

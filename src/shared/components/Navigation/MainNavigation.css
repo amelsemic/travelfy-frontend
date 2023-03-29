@@ -16,9 +16,13 @@
   height: 2.5px;
   background: white;
 }
-
+.logo{
+  height: 100%;
+  display: flex;
+}
 .main-navigation__title {
   color: white;
+  align-self: center;
 }
 
 .main-navigation__title a {
