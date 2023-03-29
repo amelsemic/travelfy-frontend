@@ -19,10 +19,12 @@
 .logo{
   height: 100%;
   display: flex;
+/*   padding-left: 20px; */
 }
 .main-navigation__title {
   color: white;
   align-self: center;
+  padding-right: 10px;
 }
 
 .main-navigation__title a {
