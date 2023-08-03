@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 
 import Card from "../../shared/components/UIElements/Card";
 import Button from "../../shared/components/FormElements/Button";
+import Modal2 from "./Modal";
 import Modal from "../../shared/components/UIElements/Modal";
 /* import Map from "../../shared/components/UIElements/Map"; */
 import { AuthContext } from "../../shared/context/auth-context";
@@ -9,26 +10,33 @@ import "./PlaceItem.css";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
-import getCoordsForAdress from "../location";
-import MapContainer from "./mapConteiner";
+/* import getCoordsForAdress from "../location";
+import MapContainer from "./mapConteiner"; */
 
 const PlaceItem = (props) => {
   const auth = useContext(AuthContext);
   const [showMap, setShowMap] = useState(false);
-  const [coords, setCoords] = useState({ lat: 0, lng: 0 });
+/*   const [coords, setCoords] = useState({ lat: 0, lng: 0 }); */
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
 
-  const openMapHandler = async () => {
+/*   const openMapHandler = async () => {
     setShowMap(true);
     let newCoords = await getCoordsForAdress(props.title);
     setCoords(newCoords);
-  };
+  }; */
 
-  const closeMapHandler = () => {
+/*   const closeMapHandler = () => {
     setCoords({ lat: 0, lng: 0 });
     setShowMap(false);
-  };
+  }; */
+
+  const hideMapHandler = () => {
+    setShowMap(false)
+  }
+  const showMapHandler = () => {
+    setShowMap(true)
+  }
 
   const showDeleteWarningHandler = () => {
     setShowConfirmModal(true);
@@ -66,7 +74,7 @@ const PlaceItem = (props) => {
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} asOverlay />
-      <Modal
+{/*       <Modal
         show={showMap}
         onCancel={closeMapHandler}
         header={props.address}
@@ -80,7 +88,8 @@ const PlaceItem = (props) => {
             <MapContainer lat={coords.lat} lng={coords.lng} />
           )}
         </div>
-      </Modal>
+      </Modal> */}
+      {showMap && <Modal2 onCloseModal={hideMapHandler}> <p>will be availible soon...</p> </Modal2> }
       <Modal
         show={showConfirmModal}
         onCancel={cancelDeleteHandler}
@@ -113,7 +122,7 @@ const PlaceItem = (props) => {
             <p>{props.description}</p>
           </div>
           <div className="place-item__actions">
-            <Button inverse onClick={openMapHandler}>
+            <Button inverse onClick={showMapHandler}>
               VIEW ON MAP
             </Button>
             {props.creatorId === auth.userId && (
