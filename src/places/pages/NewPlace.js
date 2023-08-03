@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 
 import Input from "../../shared/components/FormElements/Input";
 import Button from "../../shared/components/FormElements/Button";
@@ -14,8 +14,11 @@ import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import { useHistory } from "react-router-dom";
 import ImageUpload from "../../shared/components/FormElements/ImageUpload";
+import Map from "./Map"
+import Modal from "../components/Modal";
 
 const NewPlace = () => {
+  const [showMap, setShowMap] = useState(false)
   const [formState, inputHandler] = useForm(
     {
       title: {
@@ -67,11 +70,20 @@ const NewPlace = () => {
     } catch (err) {}
   };
 
+  const showMapHandler = (e) => {
+    e.preventDefault()
+    setShowMap(true)
+  }
+
+  const hideMapHandler = () => {
+    setShowMap(false)
+  }
 
   return (
     <>
     <ErrorModal error={error} onClear={clearError} />
     {isLoading && <LoadingSpinner asOverlay />}
+    {showMap && <Modal onCloseModal={hideMapHandler}> <p>will be availible soon...</p> </Modal> }
     <form className="place-form" onSubmit={placeSubmitHandler}>
       <Input
         id="title"
@@ -98,6 +110,7 @@ const NewPlace = () => {
         errorText="Please enter a valid address."
         onInput={inputHandler}
       />
+      <button onClick={showMapHandler}>Add it on the map?</button>
       <ImageUpload onInput={inputHandler} center id="image" />
       <Button type="submit" disabled={!formState.isValid}>
         ADD PLACE
