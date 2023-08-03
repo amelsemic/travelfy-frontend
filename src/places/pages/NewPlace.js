@@ -14,7 +14,7 @@ import LoadingSpinner from "../../shared/components/UIElements/LoadingSpinner";
 import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import { useHistory } from "react-router-dom";
 import ImageUpload from "../../shared/components/FormElements/ImageUpload";
-import Map from "./Map"
+/* import Map from "./Map" */
 import Modal from "../components/Modal";
 
 const NewPlace = () => {
