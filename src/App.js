@@ -57,8 +57,6 @@ const App = () => {
     );
   }
 
-  console.log("backend=======>", process.env.REACT_APP_BACKEND_URL)
-
   return (
     <NewPlaceContextProvider>
       <AuthContext.Provider

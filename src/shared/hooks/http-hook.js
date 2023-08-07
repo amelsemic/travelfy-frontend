@@ -15,7 +15,6 @@ export const useHttpClient = () => {
           body,
           headers,
         });
-
         const data = await response.json();
         if (!response.ok) {
           throw new Error(data.message);
@@ -25,6 +24,7 @@ export const useHttpClient = () => {
         return data;
 
       } catch (err) {
+        
         setError(err.message);
         setIsLoading(false);
         throw err;

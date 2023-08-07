@@ -85,8 +85,9 @@ const Auth = () => {
           }
         );
 
-        auth.login(response.userId, response.token);
-      } catch (err) {}
+      auth.login(response.userId, response.token);
+      } catch (err) {
+      }
     } else {
       try {
         const formData = new FormData()
