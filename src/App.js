@@ -13,11 +13,12 @@ import UpdatePlace from "./places/pages/UpdatePlace";
 import Auth from "./user/pages/Auth";
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
 import { AuthContext } from "./shared/context/auth-context";
+import {NewPlaceContextProvider} from "./places/NewPlaceContextProvider";
+
 import { useAuth } from "./shared/hooks/auth-hook";
 
 const App = () => {
-  
-  const {token, login, logout, userId} = useAuth();
+  const { token, login, logout, userId } = useAuth();
 
   let routes;
 
@@ -56,21 +57,25 @@ const App = () => {
     );
   }
 
+  console.log("backend=======>", process.env.REACT_APP_BACKEND_URL)
+
   return (
-    <AuthContext.Provider
-      value={{
-        isLoggedIn: !!token,
-        token: token,
-        userId: userId,
-        login: login,
-        logout: logout,
-      }}
-    >
-      <Router>
-        <MainNavigation />
-        <main>{routes}</main>
-      </Router>
-    </AuthContext.Provider>
+    <NewPlaceContextProvider>
+      <AuthContext.Provider
+        value={{
+          isLoggedIn: !!token,
+          token: token,
+          userId: userId,
+          login: login,
+          logout: logout,
+        }}
+      >
+        <Router>
+          <MainNavigation />
+          <main>{routes}</main>
+        </Router>
+      </AuthContext.Provider>
+    </NewPlaceContextProvider>
   );
 };
 

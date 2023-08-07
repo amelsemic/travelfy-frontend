@@ -14,14 +14,12 @@ const Users = () => {
   
     const getUsers = async () => {
       try {
-        console.log(process.env.REACT_APP_BACKEND_URL)
         let data = await sendRequest(process.env.REACT_APP_BACKEND_URL + "/users");
         setLoadedUsers(data.users);
       } catch (err) {}
     };
     getUsers();
   }, [sendRequest ]);
-console.log(loadedUsers)
   return (
     <>
       <ErrorModal error={error} onClear={clearError} />

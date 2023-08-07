@@ -3,7 +3,14 @@
 * {
   box-sizing: border-box;
 }
-
+.mapboxgl-marker {
+  left: 0;
+ /*  opacity: 1; */
+  position: absolute;
+  top: 0;
+  transition: opacity .2s;
+  will-change: transform;
+}
 .cntr {
   display: flex;
   justify-content: center;
