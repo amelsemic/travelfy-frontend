@@ -82,7 +82,7 @@ const NewPlace = () => {
     setShowMap(false);
   };
 
-
+const addressErrorText = placeCntxt.isValid ? "Please enter a valid address" : "Please enter a valid address and add it on the map.";
   return (
     <>
       <ErrorModal error={error} onClear={clearError} />
@@ -111,10 +111,10 @@ const NewPlace = () => {
           element="input"
           label="Address"
           validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter a valid address."
+          errorText={addressErrorText}
           onInput={inputHandler}
+          onAddtoMap={showMapHandler}
         />
-        <button onClick={showMapHandler}>Add it on the map!</button>
         <ImageUpload onInput={inputHandler} center id="image" />
         <Button type="submit" disabled={!formState.isValid || !placeCntxt.isValid}>
           ADD PLACE

@@ -21,6 +21,31 @@
   background: #f8f8f8;
   padding: 0.15rem 0.25rem;
 }
+.form-control #address {
+  width: 75%;
+}
+.addressDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.addressDiv button {
+  margin-right: 10px;
+  cursor: pointer;
+}
+.addressDiv button.add {
+  border: 1px solid #ff0055;
+  border-radius: 4px;
+  background: white;
+  color: #ff0055;
+  font-weight: bold;
+}
+.addressDiv button.change {
+  border: 1px solid #1fb364;
+  border-radius: 4px;
+  background: white;
+  color: #1fb364;
+}
 
 .form-control input:focus,
 .form-control textarea:focus {

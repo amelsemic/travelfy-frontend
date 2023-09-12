@@ -55,7 +55,7 @@ function ClickableMap(props) {
 
 
   const clickHandler = () => {
-    if(!props.markerPosition) placeCntxt.setPlace(markerLngLat);
+    if(!props.markerPosition && markerLngLat) placeCntxt.setPlace(markerLngLat);
     props.onClose();
   };
   return (
@@ -63,7 +63,7 @@ function ClickableMap(props) {
       <div className={classes.mapcontainer}>
         <div ref={mapContainer} className={classes.map} />
       </div>
-      <button className={classes.confirmlocationbtn} onClick={clickHandler}>
+      <button disabled={!markerLngLat} className={classes.confirmlocationbtn} onClick={clickHandler}>
         {props.markerPosition ? "Close map":"Confirm location"} 
       </button>
     </Modal>

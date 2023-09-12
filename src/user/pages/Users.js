@@ -24,6 +24,7 @@ const Users = () => {
     <>
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner />}
+      {!loadedUsers ? <p style={{"color": "white"}}>Activating backend server - it goes to sleep after 20mins of inactivity</p> : null}
       {!isLoading && loadedUsers && <UsersList items={loadedUsers} />};
     </>
   );

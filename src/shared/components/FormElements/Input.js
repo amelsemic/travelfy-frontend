@@ -1,7 +1,7 @@
-import React, { useReducer, useEffect } from 'react';
-
+import React, { useReducer, useEffect, useContext } from 'react';
 import { validate } from '../../util/validators';
 import './Input.css';
+import { NewPlaceContext } from '../../../places/NewPlaceContextProvider';
 
 const inputReducer = (state, action) => {
   switch (action.type) {
@@ -29,6 +29,7 @@ const Input = props => {
     isValid: props.initialValid || false
   });
 
+  const placeCntxt = useContext(NewPlaceContext);
   const { id, onInput } = props;
   const { value, isValid } = inputState;
 
@@ -70,14 +71,19 @@ const Input = props => {
       />
     );
 
+    const buttonText = placeCntxt.isValid ? "Change on the map?" : "Add on the map!"
   return (
     <div
       className={`form-control ${!inputState.isValid && inputState.isTouched &&
         'form-control--invalid'}`}
     >
       <label htmlFor={props.id}>{props.label}</label>
+      <div className="addressDiv">
       {element}
+      {props.id==="address" && inputState.value &&  <button className= {placeCntxt.isValid ? "change" : "add" }  onClick={props.onAddtoMap}> {buttonText} </button>}
+      </div>
       {!inputState.isValid && inputState.isTouched && <p>{props.errorText}</p>}
+    
     </div>
   );
 };
